@@ -1,6 +1,7 @@
 import { AnimalFactory, defaultAnimalOptions } from "./AnimalFactory";
 import { IAnimal } from "./types";
 import { MonkeyFactory } from './MonkeyFactory'
+import { TigerFactory } from './TigerFactory'
 import { JungleFactory } from './Jungle';
 declare global {
   interface Window { Jungle: any; }
@@ -9,13 +10,7 @@ declare global {
 window.Jungle = window.Jungle || {};
 const snake = AnimalFactory("SNAKE");
 
-const tiger = AnimalFactory("TIGER", {
-  ...defaultAnimalOptions,
-  sleep_bonus: 5,
-  supported_foods: ["FISH", "MEAT"],
-  sound_description: "Grrr!!!"
-});
-
+const tiger = TigerFactory("Tigger 1");
 const monkey = MonkeyFactory('Monkey 1');
 const animals: IAnimal[] = [monkey, tiger, snake];
 
