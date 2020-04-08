@@ -24,6 +24,11 @@ describe('Monkey Factory Test suite', () => {
     monkey.makeSound()
     expect(monkey.getEnergy()).toBe(6)
   })
+  it('Monkeys should be able to sleep and increase energy', () => {
+    monkey.setEnergy(0)
+    monkey.sleep()
+    expect(monkey.getEnergy()).toBe(defaultAnimalOptions.sleep_bonus)
+  })
   it('Only Monkeys can play', () => {
     // @ts-ignore:
     expect(dog.play).toBeUndefined()
