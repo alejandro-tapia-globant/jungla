@@ -8,8 +8,7 @@ export const TigerFactory = (tigerName: string = "tiger"): IAnimal => {
     sleep_bonus: 5,
     sound_description: "Grrr!!!",
   });
-  tiger.eat = (food?: Food) => {
-    if (!food) return tiger.getEnergy();
+  tiger.eat = (food: Food) => {
     const canEatFood = supported_foods.includes(food);
     if (!canEatFood) {
       // throw new Error('I can't eat that!');

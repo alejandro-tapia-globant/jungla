@@ -1,27 +1,32 @@
 import { IAnimal, IJungle, IMonkey } from "./types";
 import { getRandomInt } from "./utils";
 
-export const JungleFactory = (animals: IAnimal[]): IJungle => {
+export const JungleFactory = (providedAnimals: IAnimal[]): IJungle => {
+  const animals = {
+    tigers: providedAnimals.filter((animal) => animal.getAnimalType() === "TIGER"),
+    monkeys: providedAnimals.filter(
+      (animal) => animal.getAnimalType() === "MONKEY"
+    ) as IMonkey[],
+    snakes: providedAnimals.filter((animal) => animal.getAnimalType() === "SNAKE"),
+  };
   return {
-    animals: {
-      tigers: animals.filter((animal) => animal.getAnimalType() === "TIGER"),
-      monkeys: animals.filter(
-        (animal) => animal.getAnimalType() === "MONKEY"
-      ) as IMonkey[],
-      snakes: animals.filter((animal) => animal.getAnimalType() === "SNAKE"),
-    },
+    animals,
     foods: {
       FISH: "FISH",
       GRAIN: "GRAIN",
       MEAT: "MEAT",
     },
     soundOff: () => {
-      animals.forEach((animal: IAnimal) => animal.makeSound());
+      const { tigers, monkeys, snakes} = animals;
+      snakes.forEach((animal: IAnimal) => animal.makeSound());
+      tigers.forEach((animal: IAnimal) => animal.makeSound());
+      monkeys.forEach((animal: IAnimal) => animal.makeSound());
     },
     random: () => {
-      animals.forEach((animal: IAnimal) => {
+      const { tigers, monkeys, snakes} = animals;
+      [...tigers, ...monkeys, ...snakes].forEach((animal: IAnimal) => {
         animal.setEnergy(20);
-        const methods = ["sleep", "eat", "makeSound"];
+        const methods = animal.getAvailableMethods();
         const randomIndex: number = getRandomInt(0, methods.length - 1);
         const randomMethod = methods[randomIndex] as
           | "sleep"

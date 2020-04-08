@@ -7,6 +7,7 @@ export const defaultAnimalOptions: IAnimalOptions = {
   sleep_bonus: 10,
   sound_description: "Generic Animal Sound!!!",
   supported_foods: ["FISH", "GRAIN", "MEAT"],
+  available_methods: ["sleep", "eat", "makeSound"]
 };
 
 export const AnimalFactory = (
@@ -29,6 +30,7 @@ export const AnimalFactory = (
     getEnergy: () => energy,
     getAnimalType: () => animalType,
     setAnimalType: (newAnimalType:string) => {animalType = newAnimalType},
+    getAvailableMethods: () => animalOptions.available_methods,
     sleep: () => setEnergy(energy + Math.abs(animalOptions.sleep_bonus)),
     eat: () => setEnergy(energy + animalOptions.eat_bonus),
     makeSound: () => {

@@ -6,6 +6,7 @@ export interface IAnimalOptions {
   sleep_bonus: number;
   sound_description: string;
   supported_foods: Array<Food>;
+  available_methods: string[];
 }
 
 export interface IAnimal {
@@ -13,8 +14,9 @@ export interface IAnimal {
   getEnergy: () => number;
   getAnimalType: () => string;
   setAnimalType: (species: string) => void;
+  getAvailableMethods: () => string[];
   sleep: () => void;
-  eat: (food?: Food) => number;
+  eat: (food: Food) => number;
   makeSound: () => string;
   say: (message: string, species:string, error?: string) => void;
 }

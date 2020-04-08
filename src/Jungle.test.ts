@@ -2,24 +2,33 @@ import { AnimalFactory } from "./AnimalFactory";
 import { MonkeyFactory } from './MonkeyFactory'
 import { TigerFactory } from './TigerFactory'
 import { JungleFactory } from './JungleFactory'
-import { say } from './utils';
+import { say, getRandomInt } from './utils';
 
 jest.mock('./utils.ts', () => {
   return {
     BASE_ENERGY: 10,
     say: jest.fn(),
+    getRandomInt: (min: number, max: number) => {
+      // Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+    }
   }
 })
 
 describe('Jungle Test suite', () => {
 
-  const snake = AnimalFactory("SNAKE");
-  const tiger = TigerFactory("Tigger 1");
-  const monkey = MonkeyFactory('Monkey 1');
-
+  let snake = AnimalFactory("SNAKE");
+  let tiger = TigerFactory("Tigger 1");
+  let monkey = MonkeyFactory('Monkey 1');
   let Jungle = JungleFactory([snake, tiger, monkey])
+
   beforeEach(() => {
     Jungle = JungleFactory([snake, tiger, monkey])
+    snake = AnimalFactory("SNAKE");
+    tiger = TigerFactory("Tigger 1");
+    monkey = MonkeyFactory('Monkey 1');
   })
   
   it('Jungle should load wo errors', () => {
@@ -28,6 +37,7 @@ describe('Jungle Test suite', () => {
     expect(Jungle.animals.monkeys).toBeTruthy()
     expect(Jungle.animals.snakes).toBeTruthy()
   })
+  
   it('Jungle should perform soundOff', () => {
     Jungle.soundOff()
     expect(say).toHaveBeenNthCalledWith(1, "Generic Animal Sound!!!", "SNAKE")
@@ -36,6 +46,18 @@ describe('Jungle Test suite', () => {
     expect(say).toHaveBeenNthCalledWith(4, "I have 7 energy units left", "Tigger 1")
     expect(say).toHaveBeenNthCalledWith(5, "uuh uuh ahh ahh", 'Monkey 1')
     expect(say).toHaveBeenNthCalledWith(6, "I have 6 energy units left", 'Monkey 1')
+  })
+  it('Tigers cant eat GRAIN', () => {
+    Jungle.animals.tigers[0].eat(Jungle.foods.GRAIN);
+    expect(say).toHaveBeenLastCalledWith("I can't eat that!", "Tigger 1", "error")
+  })
+  it('Can randomly invoke animals methods', () => {
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    expect(say).toHaveBeenCalled()
   })
   afterAll(() => {
     jest.clearAllMocks();

@@ -7,6 +7,8 @@ export const MonkeyFactory = (monkeyName: string = "MONKEY"): IMonkey => {
     sound_description: "uuh uuh ahh ahh",
     eat_bonus: 2,
     sound_cost: 4,
+    available_methods: [...defaultAnimalOptions.available_methods, "play"]
+
   });
   monkey.play = () => {
     const playCost = 8;
