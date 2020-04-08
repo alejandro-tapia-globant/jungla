@@ -1,7 +1,12 @@
 import { AnimalFactory, defaultAnimalOptions } from "./AnimalFactory";
 import { IAnimal } from "./types";
-import { getRandomInt } from "./utils";
+import { MonkeyFactory } from './MonkeyFactory'
+import { JungleFactory } from './Jungle';
+declare global {
+  interface Window { Jungle: any; }
+}
 
+window.Jungle = window.Jungle || {};
 const snake = AnimalFactory("SNAKE");
 
 const tiger = AnimalFactory("TIGER", {
@@ -10,39 +15,9 @@ const tiger = AnimalFactory("TIGER", {
   supported_foods: ["FISH", "MEAT"],
   sound_description: "Grrr!!!"
 });
-// Extending an Animal
-const monkey = AnimalFactory("MONKEY", {
-  ...defaultAnimalOptions,
-  sound_description: "uuh uuh ahh ahh"
-});
-monkey.play = () => {
-  const playCost = 8;
-  const currentEnergy = monkey.getEnergy();
-  if (currentEnergy < playCost) {
-    monkey.say("Im too tired!", "error");
-    return 0;
-  }
-  monkey.say("Oooo Oooo");
-  return monkey.setEnergy(currentEnergy - playCost);
-};
 
+const monkey = MonkeyFactory('Monkey 1');
 const animals: IAnimal[] = [monkey, tiger, snake];
 
-const Jungle = {
-  animals,
-  soundOff: () => {
-    animals.forEach((animal: IAnimal) => animal.makeSound());
-  },
-  random: () => {
-    animals.forEach((animal: IAnimal) => {
-      animal.setEnergy(20);
-      const methods = Object.keys(animal);
-      const randomIndex = getRandomInt(0, methods.length - 1);
-      console.log(animal.getAnimalType());
-      console.log("Executing " + methods[randomIndex]);
-      animal[methods[randomIndex]]();
-    });
-  }
-};
 
-window.Jungle = Jungle;
+window.Jungle = JungleFactory(animals);

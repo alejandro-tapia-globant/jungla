@@ -10,20 +10,23 @@ jest.mock('./utils.ts', () => {
 
 
 describe('Animal Factory Test suite', () => {
-  it('Animal should be able to eat, sleep and make sound', () => {
-    const snake = AnimalFactory('SNAKE')
+  let snake = AnimalFactory('SNAKE');
+  
+  beforeEach(() => {
+    snake = AnimalFactory('SNAKE');
+  })
+
+  it('Animal should be able to sleep and increase energy', () => {
     snake.sleep()
     expect(snake.getEnergy()).toBe(defaultAnimalOptions.sleep_bonus)
   })
-  it('Animal should be able to eat, sleep and make sound', () => {
-    const snake = AnimalFactory('SNAKE')
+  it('Animal should be able to eat and increase energy', () => {
     snake.eat('GRAIN')
     expect(snake.getEnergy()).toBe(defaultAnimalOptions.eat_bonus)
   })
-  it('Animal should be able to make sound', () => {
-    const snake = AnimalFactory('SNAKE')
+  it('Animal should be able to make sound and lose energy', () => {
+    snake.setEnergy(10)
     snake.makeSound();
-    expect(snake.getEnergy()).toBe(0)
-    expect(snake.say).toHaveBeenCalledWith("Im too tired!", "SNAKE", "error")
+    expect(snake.getEnergy()).toBe(7)
   })
 })

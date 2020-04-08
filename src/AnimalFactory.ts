@@ -27,24 +27,15 @@ export const AnimalFactory = (
     setEnergy,
     getEnergy: () => energy,
     getAnimalType: () => species,
-    sleep: () => setEnergy(energy + animalOptions.sleep_bonus),
-    eat: (food: Food) => {
-      if (!food) return;
-      const canEatFood = animalOptions.supported_foods.includes(food);
-      if (!canEatFood) {
-        // throw new Error(`I CAN'T EAT ${food}`);
-        say(`I can't eat ${food}`, species, "error");
-        return;
-      }
-      return setEnergy(energy + animalOptions.eat_bonus);
-    },
+    sleep: () => setEnergy(energy + Math.abs(animalOptions.sleep_bonus)),
+    eat: () => setEnergy(energy + animalOptions.eat_bonus),
     makeSound: () => {
-      if (energy < animalOptions.sound_cost) {
+      if (energy < Math.abs(animalOptions.sound_cost)) {
         say("Im too tired!", species, "error");
         return 0;
       }
       say(animalOptions.sound_description, species);
-      setEnergy(energy - animalOptions.sound_cost, true);
+      setEnergy(energy - Math.abs(animalOptions.sound_cost), true);
       return animalOptions.sound_description;
     },
     say,

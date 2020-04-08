@@ -11,10 +11,13 @@ export interface IAnimalOptions {
 export interface IAnimal {
   setEnergy: (newEnergy: number) => number;
   getEnergy: () => number;
-  play?: () => number;
+  
   getAnimalType: () => string;
   sleep(): void;
-  eat: (food: Food) => number;
+  eat: (food?: Food) => number;
   makeSound: () => string;
   say: (message: string, error?: string) => void;
+}
+export interface IMonkey extends IAnimal {
+  play: () => number;
 }
