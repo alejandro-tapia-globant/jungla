@@ -12,11 +12,27 @@ export interface IAnimal {
   setEnergy: (newEnergy: number) => number;
   getEnergy: () => number;
   getAnimalType: () => string;
-  sleep(): void;
+  setAnimalType: (species: string) => void;
+  sleep: () => void;
   eat: (food?: Food) => number;
   makeSound: () => string;
   say: (message: string, species:string, error?: string) => void;
 }
 export interface IMonkey extends IAnimal {
   play: () => number;
+}
+
+export interface IJungle {
+  animals: {
+    tigers: IAnimal[];
+    monkeys: IMonkey[];
+    snakes: IAnimal[];
+  };
+  foods: {
+    GRAIN: Food;
+    FISH: Food;
+    MEAT: Food;
+  }
+  soundOff: () => void;
+  random: () => void;
 }

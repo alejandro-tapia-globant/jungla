@@ -18,5 +18,6 @@ export const MonkeyFactory = (monkeyName: string = "MONKEY"): IMonkey => {
     monkey.say("Oooo Oooo", monkeyName);
     return monkey.setEnergy(currentEnergy - playCost);
   };
+  monkey.setAnimalType('MONKEY');
   return monkey as IMonkey;
 };

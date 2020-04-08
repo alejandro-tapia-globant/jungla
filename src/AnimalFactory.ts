@@ -10,31 +10,33 @@ export const defaultAnimalOptions: IAnimalOptions = {
 };
 
 export const AnimalFactory = (
-  species: string,
+  animalName: string,
   animalOptions: IAnimalOptions = defaultAnimalOptions
 ): IAnimal => {
   let energy = BASE_ENERGY;
-  
-  const setEnergy = (newEnergy: number, tell: boolean = false) => {
-    if (!newEnergy && newEnergy !== 0) return;
+  let animalType = 'SNAKE'
+  const setEnergy = (newEnergy: number, tell: boolean = false): number => {
+    if (!newEnergy && newEnergy !== 0) return energy;
     energy = newEnergy;
     if (tell) {
-      say(`I have ${energy} energy units left`, species);
+      say(`I have ${energy} energy units left`, animalName);
     }
+    return energy;
   };
 
   return {
     setEnergy,
     getEnergy: () => energy,
-    getAnimalType: () => species,
+    getAnimalType: () => animalType,
+    setAnimalType: (newAnimalType:string) => {animalType = newAnimalType},
     sleep: () => setEnergy(energy + Math.abs(animalOptions.sleep_bonus)),
     eat: () => setEnergy(energy + animalOptions.eat_bonus),
     makeSound: () => {
       if (energy < Math.abs(animalOptions.sound_cost)) {
-        say("Im too tired!", species, "error");
+        say("Im too tired!", animalName, "error");
         return 0;
       }
-      say(animalOptions.sound_description, species);
+      say(animalOptions.sound_description, animalName);
       setEnergy(energy - Math.abs(animalOptions.sound_cost), true);
       return animalOptions.sound_description;
     },

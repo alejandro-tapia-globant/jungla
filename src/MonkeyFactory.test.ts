@@ -43,4 +43,7 @@ describe('Monkey Factory Test suite', () => {
     monkey.play()
     expect(say).toHaveBeenLastCalledWith("Im too tired!", "Monkey 1", "error")
   })
+  afterAll(() => {
+    jest.clearAllMocks();
+  })
 })

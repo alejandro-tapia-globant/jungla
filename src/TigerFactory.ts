@@ -16,7 +16,8 @@ export const TigerFactory = (tigerName: string = "tiger"): IAnimal => {
       tiger.say(`I can't eat that!`, tigerName, "error");
       return tiger.getEnergy();
     }
-     return tiger.setEnergy(tiger.getEnergy() + defaultAnimalOptions.eat_bonus);
-   }
+    return tiger.setEnergy(tiger.getEnergy() + defaultAnimalOptions.eat_bonus);
+  };
+  tiger.setAnimalType('TIGER');
   return tiger;
 };

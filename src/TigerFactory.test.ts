@@ -1,5 +1,5 @@
 
-import { AnimalFactory, defaultAnimalOptions } from './AnimalFactory'
+import { defaultAnimalOptions } from './AnimalFactory'
 import { TigerFactory } from './TigerFactory';
 import { say } from './utils';
 
@@ -31,5 +31,8 @@ describe('tiger Factory Test suite', () => {
   it("Tigers can't eat GRAIN", () => {
     tiger.eat("GRAIN")
     expect(say).toHaveBeenLastCalledWith("I can't eat that!", "Tiger 1", "error")
+  })
+  afterAll(() => {
+    jest.clearAllMocks();
   })
 })

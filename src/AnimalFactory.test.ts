@@ -7,8 +7,6 @@ jest.mock('./utils.ts', () => {
   }
 })
 
-
-
 describe('Animal Factory Test suite', () => {
   let snake = AnimalFactory('SNAKE');
   
@@ -28,5 +26,8 @@ describe('Animal Factory Test suite', () => {
     snake.setEnergy(10)
     snake.makeSound();
     expect(snake.getEnergy()).toBe(7)
+  })
+  afterAll(() => {
+    jest.clearAllMocks();
   })
 })
