@@ -52,12 +52,34 @@ describe('Jungle Test suite', () => {
     expect(say).toHaveBeenLastCalledWith("I can't eat that!", "Tigger 1", "error")
   })
   it('Can randomly invoke animals methods', () => {
+    const animals = [snake, tiger, monkey];
+    animals.forEach((animal) => {
+      const availableMethods = animal.getAvailableMethods()
+      availableMethods.forEach((method)=> {
+        // @ts-ignore:
+        animal[method] = jest.fn()
+      })
+    })
+    Jungle = JungleFactory([snake, tiger, monkey])
     Jungle.random()
     Jungle.random()
     Jungle.random()
     Jungle.random()
     Jungle.random()
-    expect(say).toHaveBeenCalled()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    Jungle.random()
+    expect(tiger.eat).toHaveBeenCalled()
+    expect(snake.sleep).toHaveBeenCalled()
+    expect(monkey.play).toHaveBeenCalled()
   })
   afterAll(() => {
     jest.clearAllMocks();

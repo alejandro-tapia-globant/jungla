@@ -27,11 +27,12 @@ export const JungleFactory = (providedAnimals: IAnimal[]): IJungle => {
       [...tigers, ...monkeys, ...snakes].forEach((animal: IAnimal) => {
         animal.setEnergy(20);
         const methods = animal.getAvailableMethods();
-        const randomIndex: number = getRandomInt(0, methods.length - 1);
+        const randomIndex: number = getRandomInt(0, methods.length);
         const randomMethod = methods[randomIndex] as
           | "sleep"
           | "eat"
           | "makeSound";
+        // console.info(animal.getAnimalType() + ' Executing: ' + randomMethod)
         if (randomMethod === "eat") return animal[randomMethod]("FISH");
         animal[randomMethod]();
       });
